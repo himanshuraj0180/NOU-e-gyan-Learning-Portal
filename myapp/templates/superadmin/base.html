@@ -16,12 +16,13 @@
       href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Work+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/premium.css' %}">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
-      /* =========================================
-   NOU SUCCESS / ERROR POPUP
-   ========================================= */
+    
 
 .nou-alert-popup {
     border-radius: 28px !important;
@@ -47,7 +48,7 @@
 }
     </style>
   </head>
-  <body>
+  <body class="nou-premium t-admin">
     {% include "superadmin/includes/sidebar.html" %} 
     {% include "superadmin/includes/navbar.html" %} 
     {% block content %} 

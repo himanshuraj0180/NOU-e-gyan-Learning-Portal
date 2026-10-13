@@ -1,0 +1,539 @@
+/* =========================================================
+   NOU e-Gyan — PREMIUM THEME LAYER
+   ---------------------------------------------------------
+   Sirf visual theme. Koi HTML / logic / layout change nahi.
+
+   Kaise kaam karta hai:
+   - Teeno base.html me <body class="nou-premium t-admin|t-teacher|t-student">
+   - Har panel ka apna colour palette (neeche TOKENS section).
+   - Page ke andar jo purane inline <style> hain, unhe
+     `body.nou-premium ...` selectors se override kiya gaya hai
+     (higher specificity), isliye kisi page ko edit nahi karna pada.
+
+   Palette badalni ho to sirf neeche "TOKENS" block badlo.
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   1. TOKENS  (panel-wise palette)
+   --------------------------------------------------------- */
+body.nou-premium {
+  --font-display: "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
+
+  /* neutrals shared by all panels */
+  --parchment: #ffffff;       /* cards / light text on dark */
+  --parchment-2: #e4e8f3;     /* borders */
+  --line: #e6e9f4;
+  --canvas: #f3f5fb;
+  --radius: 18px;
+  --radius-sm: 12px;
+  --brass: rgb(137, 173, 235);           /* gold accent (text-safe on white) */
+  --brass-soft: #f4cc7a;      /* gold accent (on dark) */
+  --ok: #15803d;
+  --warn:  rgb(137, 173, 235);
+}
+
+/* Super Admin — Midnight Indigo + Gold */
+body.t-admin {
+  --ink: #0e1433;
+  --ink-text: #2a3150;
+  --brick: #2c3a9b;
+  --brick-deep: #141b55;
+  --sage: #6b77a8;
+  --muted: #667091;
+  --tint: rgba(44, 58, 155, 0.06);
+  --tint-2: rgba(44, 58, 155, 0.12);
+  --ring: rgba(44, 58, 155, 0.18);
+  --shadow-rgb: 20, 27, 85;
+  --canvas: #f1f3fb;
+  --wash: rgba(44, 58, 155, 0.1);
+}
+
+/* Teacher — Emerald + Amber */
+body.t-teacher {
+  --ink: #0c2a26;
+  --ink-text: #24403c;
+  --brick: #0e6b5c;
+  --brick-deep: #08403a;
+  --sage: #5f9d90;
+  --muted: #5f7773;
+  --tint: rgba(14, 107, 92, 0.06);
+  --tint-2: rgba(14, 107, 92, 0.12);
+  --ring: rgba(14, 107, 92, 0.18);
+  --shadow-rgb: 8, 64, 58;
+  --canvas: #f1f7f6;
+  --wash: rgba(14, 107, 92, 0.1);
+}
+
+/* Student — Royal Violet + Gold */
+body.t-student {
+  --ink: #1b1240;
+  --ink-text: #332a5c;
+  --brick: #5b3fd1;
+  --brick-deep: #2f1c78;
+  --sage: #9482e0;
+  --muted: #6f6a92;
+  --tint: rgba(91, 63, 209, 0.06);
+  --tint-2: rgba(91, 63, 209, 0.12);
+  --ring: rgba(91, 63, 209, 0.2);
+  --shadow-rgb: 47, 28, 120;
+  --canvas: #f5f3fd;
+  --wash: rgba(91, 63, 209, 0.1);
+}
+
+/* ---------------------------------------------------------
+   2. BASE
+   --------------------------------------------------------- */
+body.nou-premium {
+  background:
+    radial-gradient(900px 380px at 100% 0%, var(--wash), transparent 70%),
+    var(--canvas) !important;
+  background-attachment: fixed !important;
+  color: var(--ink-text);
+  font-family: var(--font-body);
+  accent-color: var(--brick);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+body.nou-premium ::selection { background: var(--brick); color: #fff; }
+body.nou-premium :is(h1, h2, h3, h4, h5) { letter-spacing: -0.015em; }
+body.nou-premium :is(button, input, select, textarea) { font-family: inherit; }
+body.nou-premium .canvas-texture {
+  background-image: none !important;
+  background-color: transparent !important;
+}
+body.nou-premium .main-content,
+body.nou-premium .content,
+body.nou-premium .content-wrap { background: transparent; }
+
+/* thin modern scrollbars */
+body.nou-premium * { scrollbar-width: thin; scrollbar-color: rgba(var(--shadow-rgb), 0.28) transparent; }
+body.nou-premium ::-webkit-scrollbar { width: 8px; height: 8px; }
+body.nou-premium ::-webkit-scrollbar-thumb { background: rgba(var(--shadow-rgb), 0.25); border-radius: 8px; }
+body.nou-premium ::-webkit-scrollbar-track { background: transparent; }
+
+/* ---------------------------------------------------------
+   3. SIDEBAR
+   --------------------------------------------------------- */
+body.nou-premium .sidebar {
+  background:
+    radial-gradient(120% 55% at 0% 0%, rgba(244, 204, 122, 0.18), transparent 60%),
+    radial-gradient(90% 45% at 100% 100%, rgba(255, 255, 255, 0.08), transparent 65%),
+    linear-gradient(175deg, var(--brick) 0%, var(--brick-deep) 100%) !important;
+  color: #fff;
+  box-shadow: 8px 0 32px -12px rgba(var(--shadow-rgb), 0.45);
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+}
+body.nou-premium .sidebar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.22); }
+
+body.nou-premium .brand { border-bottom: 1px solid rgba(255, 255, 255, 0.12); }
+body.nou-premium .brand-mark {
+  background: linear-gradient(135deg, #fbe3a6 0%, #e0a93f 100%);
+  color: var(--brick-deep);
+  border: 0;
+  border-radius: 14px;
+  box-shadow: 0 6px 16px -4px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  font-weight: 800;
+}
+body.nou-premium .brand-text .school,
+body.nou-premium .brand-name { font-weight: 800; color: #fff; letter-spacing: -0.01em; }
+body.nou-premium .brand-text .place,
+body.nou-premium .brand-sub { color: rgba(255, 255, 255, 0.62); }
+
+body.nou-premium .role-badge,
+body.nou-premium .zone-pill {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(244, 204, 122, 0.4);
+  color: var(--brass-soft);
+  border-radius: 999px;
+  font-weight: 700;
+  backdrop-filter: blur(6px);
+}
+body.nou-premium .role-badge .dot,
+body.nou-premium .zone-pill .dot {
+  background: var(--brass-soft);
+  box-shadow: 0 0 0 3px rgba(244, 204, 122, 0.2);
+}
+body.nou-premium .nav-group-title,
+body.nou-premium .navgroup-title {
+  color: rgba(255, 255, 255, 0.45);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+/* nav links */
+body.nou-premium .nav-link-item,
+body.nou-premium .navlink {
+  color: rgba(255, 255, 255, 0.82);
+  border-left: 0 !important;
+  border-radius: var(--radius-sm);
+  margin-bottom: 2px;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+body.nou-premium .navlink { margin: 2px 12px; padding: 10px 14px; }
+body.nou-premium .navgroup-title { padding-left: 26px; }
+body.nou-premium .nav-link-item:hover,
+body.nou-premium .navlink:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  margin-left: 0;
+}
+body.nou-premium .navlink:hover { margin-left: 12px; }
+body.nou-premium .nav-link-item:hover { transform: translateX(3px); }
+body.nou-premium .nav-link-item.active {
+  background: #fff;
+  color: var(--brick);
+  font-weight: 700;
+  box-shadow: 0 8px 20px -8px rgba(0, 0, 0, 0.4);
+}
+body.nou-premium .nav-link-item.active::after { background: var(--brass); }
+body.nou-premium .navlink.active {
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+  font-weight: 700;
+  box-shadow: inset 3px 0 0 var(--brass-soft), 0 8px 20px -10px rgba(0, 0, 0, 0.45);
+}
+body.nou-premium .navlink .chev,
+body.nou-premium .nav-link-item .rune { color: var(--brass-soft); opacity: 1; }
+body.nou-premium .nav-link-item.active .rune { color: var(--brass); }
+
+/* ---------------------------------------------------------
+   4. TOPBAR
+   --------------------------------------------------------- */
+body.nou-premium .topbar {
+  background: rgba(255, 255, 255, 0.86) !important;
+  backdrop-filter: saturate(160%) blur(14px);
+  -webkit-backdrop-filter: saturate(160%) blur(14px);
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 6px 24px -18px rgba(var(--shadow-rgb), 0.35);
+}
+body.nou-premium .topbar h1,
+body.nou-premium .page-title { color: var(--ink); font-weight: 800; }
+body.nou-premium .topbar .sub,
+body.nou-premium .page-sub { color: var(--muted); }
+
+body.nou-premium .who-chip,
+body.nou-premium .profile-chip {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  box-shadow: 0 4px 14px -8px rgba(var(--shadow-rgb), 0.3);
+}
+body.nou-premium .who-chip .avatar,
+body.nou-premium .profile-avatar {
+  background: linear-gradient(135deg, var(--brick), var(--brick-deep));
+  color: #fff;
+  border-radius: 50%;
+  font-weight: 800;
+}
+body.nou-premium .who-chip .name,
+body.nou-premium .profile-name { color: var(--ink); font-weight: 700; }
+body.nou-premium .who-chip .role,
+body.nou-premium .profile-role { color: var(--muted); }
+
+body.nou-premium .btn-logout,
+body.nou-premium .logout-btn {
+  border: 1.5px solid var(--brick);
+  color: var(--brick);
+  background: transparent;
+  border-radius: 999px;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+body.nou-premium .btn-logout:hover,
+body.nou-premium .logout-btn:hover {
+  background: linear-gradient(135deg, var(--brick), var(--brick-deep));
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 8px 18px -8px rgba(var(--shadow-rgb), 0.6);
+}
+
+/* ---------------------------------------------------------
+   5. HERO BANNERS
+   --------------------------------------------------------- */
+body.nou-premium :is(.hero, .ms-hero, .page-hero, .test-hero) {
+  background:
+    radial-gradient(70% 140% at 100% 0%, rgba(244, 204, 122, 0.28), transparent 55%),
+    radial-gradient(60% 120% at 0% 100%, rgba(255, 255, 255, 0.1), transparent 60%),
+    linear-gradient(135deg, var(--brick) 0%, var(--brick-deep) 100%) !important;
+  border: 0 !important;
+  border-radius: 22px !important;
+  color: #fff;
+  box-shadow: 0 24px 50px -24px rgba(var(--shadow-rgb), 0.7);
+}
+body.nou-premium :is(.hero, .ms-hero, .page-hero, .test-hero)::after {
+  background: rgba(255, 255, 255, 0.08);
+}
+body.nou-premium :is(.hero h1, .ms-title, .page-hero h1, .test-hero h1) {
+  color: #fff;
+  font-weight: 800;
+}
+body.nou-premium :is(.hero .eyebrow, .ms-eyebrow, .hero-eyebrow) {
+  color: var(--brass-soft);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+}
+body.nou-premium :is(.hero .sub, .ms-desc, .page-hero .sub) { color: rgba(255, 255, 255, 0.82); }
+body.nou-premium :is(.hero-badge, .ms-chip) {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(244, 204, 122, 0.45);
+  color: var(--brass-soft);
+  border-radius: 999px;
+  font-weight: 700;
+  backdrop-filter: blur(6px);
+}
+
+/* ---------------------------------------------------------
+   6. CARDS / PANELS
+   --------------------------------------------------------- */
+body.nou-premium :is(
+  .panel, .form-card, .split-card, .table-card, .ms-panel, .ms-form-panel,
+  .stat-light, .qa-card, .quick-card, .mini-card, .notice-card, .info-card,
+  .detail-card, .help-card, .meet-card, .meet-table-wrapper, .question-card,
+  .stat-box, .submit-card, .editor-panel, .scriptorium, .dashboard-note
+) {
+  background: #fff !important;
+  border: 1px solid var(--line) !important;
+  border-radius: var(--radius) !important;
+  box-shadow:
+    0 1px 2px rgba(var(--shadow-rgb), 0.04),
+    0 14px 34px -22px rgba(var(--shadow-rgb), 0.28);
+}
+body.nou-premium :is(.stat-light, .qa-card, .quick-card, .mini-card, .help-card, .detail-card, .notice-card, .question-card) {
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+body.nou-premium :is(.stat-light, .qa-card, .quick-card, .mini-card, .help-card, .detail-card):hover {
+  transform: translateY(-4px);
+  margin-top: 0;
+  border-color: rgba(var(--shadow-rgb), 0.22) !important;
+  background: #fff !important;
+  box-shadow: 0 20px 40px -22px rgba(var(--shadow-rgb), 0.45);
+}
+
+/* dark stat tiles */
+body.nou-premium :is(.stat-dark, .hero-card) {
+  background:
+    radial-gradient(90% 120% at 100% 0%, rgba(244, 204, 122, 0.25), transparent 60%),
+    linear-gradient(145deg, var(--brick) 0%, var(--brick-deep) 100%) !important;
+  border: 0 !important;
+  border-radius: var(--radius) !important;
+  color: #fff;
+  box-shadow: 0 22px 40px -22px rgba(var(--shadow-rgb), 0.7);
+}
+body.nou-premium :is(.stat-dark, .hero-card)::after { background: rgba(255, 255, 255, 0.08); }
+body.nou-premium :is(.stat-dark .note, .hero-caption) { color: var(--brass-soft); }
+
+/* icon badges */
+body.nou-premium :is(.icon-badge, .mini-badge, .quick-icon, .detail-badge, .help-badge, .submit-icon) {
+  border-radius: 14px;
+}
+body.nou-premium :is(.stat-light .icon-badge, .mini-badge) {
+  background: linear-gradient(135deg, var(--brick), var(--brick-deep));
+  color: #fff;
+  box-shadow: 0 8px 16px -8px rgba(var(--shadow-rgb), 0.7);
+}
+body.nou-premium :is(.qa-card .icon-badge, .quick-icon, .detail-badge, .help-badge) {
+  background: var(--tint-2);
+  color: var(--brick);
+}
+body.nou-premium :is(.stat-light .tag, .pill, .panel-tag, .mini-tag, .notice-tag, .status-pill, .count-pill, .ms-pill, .ms-id-pill) {
+  background: var(--tint);
+  color: var(--brick);
+  border: 1px solid var(--tint-2);
+  border-radius: 999px;
+  font-weight: 700;
+}
+body.nou-premium .notice-tag.date { background: rgba(183, 121, 31, 0.12); color: #8a5a10; border-color: rgba(183, 121, 31, 0.25); }
+body.nou-premium .stat-light .num,
+body.nou-premium .mini-number,
+body.nou-premium .stat-num { color: var(--ink); font-weight: 800; }
+body.nou-premium .qa-card .arrow,
+body.nou-premium .quick-arrow { color: var(--brass); }
+
+/* headings inside cards */
+body.nou-premium :is(.section-head h2, .section-title, .ms-section-title, .panel-head h3, .panel-title, .form-card h2, .list-head h2, .split-card h2, .ms-form-title, .notice-title, .qa-card .title, .quick-title) {
+  color: var(--ink);
+  font-weight: 800;
+}
+body.nou-premium :is(.title-rule, .ms-section-rule, .ms-form-rule) {
+  background: linear-gradient(90deg, var(--brick), var(--brass-soft)) !important;
+  border-radius: 4px;
+  height: 4px;
+}
+
+/* muted copy */
+body.nou-premium :is(
+  .section-head .sub, .section-sub, .ms-section-sub, .panel-sub, .panel-head .sub, .quick-desc,
+  .qa-card .desc, .mini-caption, .stat-light .label, .notice-item .body, .notice-body,
+  .empty-note, .ms-empty, .ms-footnote, .meet-heading p, .empty-description, .teacher-email, .panel-empty,
+  .notice-card .body-text, .help-desc, .detail-label, .stat-label
+) { color: var(--muted); }
+body.nou-premium .notice-item { border-bottom-color: var(--line); }
+body.nou-premium .notice-item .dot { background: var(--brass); }
+
+/* info box (admin / teacher forms) */
+body.t-admin .info-box,
+body.t-teacher .info-box {
+  background: var(--tint);
+  border: 1px solid var(--tint-2);
+  border-left: 4px solid var(--brass);
+  border-radius: var(--radius-sm);
+  color: var(--ink-text);
+}
+
+/* ---------------------------------------------------------
+   7. TABLES
+   --------------------------------------------------------- */
+body.nou-premium :is(.table-card, .ms-panel, .meet-table-wrapper) { overflow: hidden; }
+body.nou-premium :is(.table-card, .ms-panel) { overflow-x: auto; }
+body.nou-premium table thead th {
+  background: linear-gradient(180deg, #f7f8fd, #f1f3fb) !important;
+  color: var(--brick) !important;
+  font-size: 0.7rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--line) !important;
+}
+body.nou-premium table tbody td {
+  color: var(--ink-text);
+  border-bottom: 1px solid #eef0f8 !important;
+}
+body.nou-premium table tbody tr { transition: background 0.18s ease; }
+body.nou-premium table tbody tr:hover { background: var(--tint) !important; }
+body.nou-premium table tbody tr:last-child td { border-bottom: 0 !important; }
+
+/* ---------------------------------------------------------
+   8. FORMS
+   --------------------------------------------------------- */
+body.nou-premium :is(.field-label, .ms-label) {
+  color: var(--ink);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+body.nou-premium :is(
+  .field-group input, .field-group select, .field-group textarea,
+  .ms-input, .ms-select, .ms-textarea, .ms-field input, .ms-field select, .ms-field textarea,
+  .split-card .form-control, .split-card .form-select
+) {
+  background: #fafbfe !important;
+  border: 1.5px solid #dde2f0 !important;
+  border-radius: var(--radius-sm) !important;
+  padding: 12px 14px !important;
+  color: var(--ink-text);
+  font-size: 0.93rem;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+body.nou-premium .field-group input[type="file"] { padding: 8px 10px !important; }
+body.nou-premium .ms-file input[type="file"] {
+  background: transparent !important;
+  border: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+body.nou-premium :is(
+  .field-group input, .field-group select, .field-group textarea,
+  .ms-input, .ms-select, .ms-textarea, .split-card .form-control, .split-card .form-select
+):focus {
+  outline: none;
+  background: #fff !important;
+  border-color: var(--brick) !important;
+  box-shadow: 0 0 0 4px var(--ring) !important;
+}
+body.nou-premium .field-group input[readonly] { background: #f1f3fa !important; color: var(--muted); }
+body.nou-premium ::placeholder { color: #a3a9c2 !important; }
+body.nou-premium .field-group input[type="file"]::file-selector-button {
+  background: var(--tint-2);
+  color: var(--brick);
+  border: 0;
+  border-radius: 8px;
+  padding: 6px 12px;
+  margin-right: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* student MCQ options */
+body.nou-premium .option-label {
+  background: #fff !important;
+  border: 1.5px solid var(--line) !important;
+  border-radius: var(--radius-sm) !important;
+}
+body.nou-premium .option-label:hover { border-color: var(--brick) !important; background: var(--tint) !important; }
+body.nou-premium .option-label:has(input:checked) {
+  background: var(--tint-2) !important;
+  border-color: var(--brick) !important;
+  box-shadow: 0 0 0 3px var(--ring);
+}
+
+/* ---------------------------------------------------------
+   9. BUTTONS
+   --------------------------------------------------------- */
+/* solid / primary */
+body.nou-premium :is(
+  .btn-brick, .btn-add, .btn-seal, .btn-plum, .btn-plum-sm, .btn-submit,
+  .ms-add-btn, .ms-btn, .ms-submit, .ms-connect-btn, .meet-primary
+) {
+  background: linear-gradient(135deg, var(--brick) 0%, var(--brick-deep) 100%) !important;
+  color: #fff !important;
+  border: 0 !important;
+  border-radius: var(--radius-sm) !important;
+  font-family: var(--font-body) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.01em;
+  box-shadow: 0 10px 22px -10px rgba(var(--shadow-rgb), 0.75);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+}
+body.nou-premium :is(
+  .btn-brick, .btn-add, .btn-seal, .btn-plum, .btn-plum-sm, .btn-submit,
+  .ms-add-btn, .ms-btn, .ms-submit, .ms-connect-btn, .meet-primary
+):hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+  box-shadow: 0 16px 28px -12px rgba(var(--shadow-rgb), 0.85);
+}
+/* secondary / outline */
+body.nou-premium :is(
+  .btn-ghost, .btn-white, .btn-outline-seal, .btn-edit, .btn-del, .ms-secondary-btn, .btn-light
+) {
+  border-radius: var(--radius-sm) !important;
+  font-weight: 700;
+  transition: all 0.18s ease;
+}
+body.nou-premium :is(.btn-ghost, .btn-outline-seal):hover,
+body.nou-premium :is(.btn-white, .ms-secondary-btn):hover {
+  background: var(--tint) !important;
+  border-color: var(--brick) !important;
+  color: var(--brick) !important;
+}
+body.nou-premium :is(.act-edit, .act-delete, .gact-edit, .act-link) { border-radius: 10px !important; font-weight: 700; }
+body.nou-premium .meet-action { border-radius: 10px; }
+body.nou-premium :is(.ms-link-action, .act-link) { color: var(--brick); }
+body.nou-premium .badge-warn { border-radius: 999px; background: rgba(183, 121, 31, 0.1); border-color: rgba(183, 121, 31, 0.4); }
+body.nou-premium :is(.badge-live, .badge-closed, .badge-scheduled, .meet-badge) { border-radius: 999px; font-weight: 700; }
+
+/* ---------------------------------------------------------
+   10. SWEETALERT POPUPS
+   --------------------------------------------------------- */
+.swal2-popup.nou-alert-popup {
+  border-radius: 24px !important;
+  box-shadow: 0 40px 80px -30px rgba(20, 27, 85, 0.55) !important;
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif !important;
+}
+body.t-admin .swal2-confirm.nou-alert-button { background: linear-gradient(135deg, #2c3a9b, #141b55) !important; }
+body.t-teacher .swal2-confirm.nou-alert-button { background: linear-gradient(135deg, #0e6b5c, #08403a) !important; }
+body.t-student .swal2-confirm.nou-alert-button { background: linear-gradient(135deg, #5b3fd1, #2f1c78) !important; }
+.swal2-confirm.nou-alert-button { box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.5) !important; }
+.nou-alert-title, .nou-alert-message { font-family: "Plus Jakarta Sans", system-ui, sans-serif !important; }
+
+/* ---------------------------------------------------------
+   11. FOCUS + MOTION
+   --------------------------------------------------------- */
+body.nou-premium a:focus-visible,
+body.nou-premium button:focus-visible { outline: 3px solid var(--ring); outline-offset: 2px; }
+@keyframes nouRise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+body.nou-premium :is(.main-content, .content, .content-wrap) > * { animation: nouRise 0.45s ease both; }
+@media (prefers-reduced-motion: reduce) {
+  body.nou-premium * { animation: none !important; transition: none !important; }
+}
