@@ -40,8 +40,8 @@ urlpatterns = [
     path('superadmindash/add-student',views.add_student,name="add_single_student"),
     path('superadmindash/add-students',views.add_bulkstudent,name="add_bulk_student"),
     path('superadmindash/view-student',views.view_student,name="view_student"),
-    path('superadmindash/edit-student / <str:enrollment_no>',views.edit_student,name="edit_student"),
-    path('superadmindash/delete-student / <str:enrollment_no>',views.delete_student,name="delete_student"),
+    path('superadmindash/edit-student/<str:enrollment_no>',views.edit_student,name="edit_student"),
+    path('superadmindash/delete-student/<str:enrollment_no>',views.delete_student,name="delete_student"),
 
     # superadmin - studymaterial urls
     path('superadmindash/upload-study-material',views.upload_study_material,name="upload_study_material"),
